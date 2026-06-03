@@ -7,6 +7,7 @@ import com.api.status.order_api.model.enums.OrderStatus;
 
 public record UpdateOrderDTO(
 		
+		Long id,
 		String CustomerName,
 	    BigDecimal TotalAmount,
 	    LocalDateTime updatedAt,

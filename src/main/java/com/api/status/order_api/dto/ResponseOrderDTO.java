@@ -8,12 +8,14 @@ import com.api.status.order_api.model.enums.OrderStatus;
 public record ResponseOrderDTO(
 		
 		Long id,
-		String CustomerName,
+		String customerName,
 		LocalDateTime createdAt,
 	    BigDecimal TotalAmount,
 	    OrderStatus status
 		
 		
 		) {
+
+
 
 }

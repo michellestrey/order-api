@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record CreateOrderDTO(
 		
-		 String CustomerName,
+		 String customerName,
 		 BigDecimal totalAmount
 		) {
 	
