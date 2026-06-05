@@ -31,7 +31,9 @@ public class OrderService {
 				savedOrder.getCustomerName(),
 				savedOrder.getCreatedAt(),
 				savedOrder.getTotalAmount(),
-			    savedOrder.getStatus());		
+			    savedOrder.getStatus(),
+			    savedOrder.getStatus().getDescription()		
+			    );		
 	}
 	
 	public ResponseOrderDTO buscarPorId(Long id) {
@@ -43,13 +45,19 @@ public class OrderService {
 				order.getCustomerName(),
 				order.getCreatedAt(),
 				order.getTotalAmount(),
-				order.getStatus()
+				order.getStatus(),
+				order.getStatus().getDescription()
 				 );
 		}
 	
 	  public ResponseOrderDTO atualizar(Long id, UpdateOrderDTO dto) {
 		  Order order = orderRepository.findById(id)
 				  .orElseThrow(()-> new OrderNotFoundException(id));
+		  
+		  if(!order.getStatus().canTransitionTo(dto.status())) {
+			  throw new BusinessException("Transição inválida");
+		  }
+		  
 		  order.setStatus(dto.status());
 		  Order updateOrder = orderRepository.save(order);
 		  return new ResponseOrderDTO(
@@ -57,8 +65,9 @@ public class OrderService {
 					updateOrder.getCustomerName(),
 					updateOrder.getCreatedAt(),
 					updateOrder.getTotalAmount(),
-					updateOrder.getStatus()
-					 );
+					updateOrder.getStatus(),
+					updateOrder.getStatus().getDescription()			
+					);
 	    }
 	   
 	  public void deletar(Long id) {
@@ -67,19 +76,8 @@ public class OrderService {
 		  orderRepository.delete(order);
 		  
 		  
-	  }//REGRAS
-	  
-	  private void validarStatus(OrderStatus statusAtual, OrderStatus statusSolicitado) {
-		  if(statusAtual == OrderStatus.SHIPPED) {
-			  throw new BusinessException("Pedido enviado não pode ser alterado");
-		  }
-		  if(statusAtual == OrderStatus.CANCELED) {
-			  throw new BusinessException("Pedido cancelado não pode ser alterado");
-		  }
 	  }
-	  
-	  
-
-		
+	 
+	
 	
 }
