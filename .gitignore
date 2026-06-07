@@ -38,6 +38,7 @@ build/
 # Environment files
 .env
 .env.*
+!.env.example
 
 # Spring local configs
 application-local.properties
