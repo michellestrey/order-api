@@ -22,10 +22,17 @@ public class OrderController {
 	
 	
 	private final OrderService orderService;
+
 	
 	public OrderController(OrderService orderService) {
 		this.orderService = orderService;
 	}
+	
+	@GetMapping("/smoke")
+	public String Smoke(String smoke) {
+		return "Smoke";
+	}
+	
 	
 	@PostMapping
 	public ResponseEntity<ResponseOrderDTO> create(@RequestBody CreateOrderDTO dto){
